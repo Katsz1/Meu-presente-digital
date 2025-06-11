@@ -1,8 +1,8 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Feliz Dia dos Namorados</title>
   <link rel="icon" href="https://cdn-icons-png.flaticon.com/512/616/616408.png" type="image/png">
   <style>
@@ -27,15 +27,14 @@
       box-shadow: 0 0 20px rgba(0,0,0,0.2);
       cursor: pointer;
       transition: opacity 0.5s;
+      z-index: 10;
     }
-    .envelope::before, .envelope::after {
+    .envelope::before {
       content: '';
       position: absolute;
       width: 0;
       height: 0;
       border-style: solid;
-    }
-    .envelope::before {
       border-width: 50px 100px 0 100px;
       border-color: #ff4e50 transparent transparent transparent;
       top: 0;
@@ -44,7 +43,7 @@
     .message {
       display: none;
       position: absolute;
-      top: 10%;
+      top: 15%;
       left: 50%;
       transform: translateX(-50%);
       width: 90%;
@@ -52,13 +51,48 @@
       font-size: 1.8em;
       color: white;
       animation: fadeIn 2s ease-in-out forwards;
+      z-index: 5;
     }
     .show .message {
       display: block;
     }
-    @keyframes fadeIn {
-      from { opacity: 0; }
-      to { opacity: 1; }
+    .buttons {
+      display: none;
+      position: absolute;
+      bottom: 5%;
+      left: 50%;
+      transform: translateX(-50%);
+      z-index: 5;
+    }
+    .show .buttons {
+      display: block;
+    }
+    .heart-button {
+      background-color: purple;
+      color: white;
+      border: none;
+      border-radius: 50%;
+      width: 60px;
+      height: 60px;
+      font-size: 2em;
+      cursor: pointer;
+      box-shadow: 0 0 10px rgba(0,0,0,0.5);
+    }
+    .response {
+      display: none;
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      background: black;
+      color: white;
+      font-size: 2em;
+      padding-top: 20vh;
+      z-index: 15;
+    }
+    .response.show {
+      display: block;
     }
     .heart {
       position: absolute;
@@ -67,6 +101,7 @@
       background: red;
       transform: rotate(45deg);
       animation: fall 5s linear infinite;
+      z-index: 1;
     }
     .heart::before,
     .heart::after {
@@ -91,6 +126,10 @@
         opacity: 0;
       }
     }
+    @keyframes fadeIn {
+      from { opacity: 0; }
+      to { opacity: 1; }
+    }
   </style>
 </head>
 <body>
@@ -104,7 +143,15 @@
     <p style="font-size: 1.5em;">VOCÊ É O RAIO DE SOL QUE ILUMINA TODOS OS MEUS DIAS</p>
   </div>
 
-  <audio id="bgMusic" autoplay loop style="display:none">
+  <div class="buttons" id="buttons">
+    <button class="heart-button" id="loveBtn">❤️</button>
+  </div>
+
+  <div class="response" id="response">
+    A mesma quantidade infinita de estrelas no céu ✨
+  </div>
+
+  <audio id="bgMusic" style="display:none" loop>
     <source src="https://docs.google.com/uc?export=download&id=1DIXqs8ziT6IqmUwMrfTiC1NkT1OpwzXW" type="audio/mpeg">
   </audio>
 
@@ -112,14 +159,23 @@
     const envelope = document.getElementById("envelope");
     const message = document.getElementById("message");
     const music = document.getElementById("bgMusic");
+    const buttons = document.getElementById("buttons");
+    const loveBtn = document.getElementById("loveBtn");
+    const response = document.getElementById("response");
 
     envelope.addEventListener("click", () => {
       envelope.style.opacity = 0;
       setTimeout(() => {
         envelope.style.display = "none";
         message.classList.add("show");
+        buttons.classList.add("show");
         music.play();
       }, 500);
+    });
+
+    loveBtn.addEventListener("click", () => {
+      document.body.style.background = "black";
+      response.classList.add("show");
     });
 
     function createHeart() {
