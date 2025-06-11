@@ -21,6 +21,7 @@
       position: relative;
       transition: background 1s ease-in-out;
     }
+
     .container {
       position: relative;
       height: 100vh;
@@ -29,10 +30,14 @@
       align-items: center;
       flex-direction: column;
       z-index: 2;
+      padding: 5vh 5vw;
     }
+
     .envelope {
-      width: 200px;
-      height: 120px;
+      width: 50vw;
+      max-width: 250px;
+      height: 25vw;
+      max-height: 140px;
       background: white;
       border-radius: 10px;
       position: relative;
@@ -54,15 +59,19 @@
       top: 0;
       left: 0;
     }
+
     .message, .buttons, .response {
       display: none;
       z-index: 5;
     }
+
     .message p {
-      font-size: 2em;
+      font-size: 1.6em;
       color: #fff;
-      margin: 15px 10px;
+      margin: 12px 10px;
+      line-height: 1.4;
     }
+
     .heart-button {
       margin-top: 20px;
       background: #ff69b4;
@@ -79,18 +88,20 @@
       transform: scale(1.05);
       background: #e75480;
     }
+
     .response {
       position: absolute;
       top: 10%;
       left: 50%;
       transform: translateX(-50%);
-      font-size: 1.5em;
+      font-size: 1.2em;
       color: #ffffff;
       text-shadow: 0 0 5px #fff;
       max-width: 90%;
+      text-align: center;
+      z-index: 10;
     }
 
-    /* Hearts */
     .heart {
       position: fixed;
       width: 20px;
@@ -100,6 +111,7 @@
       animation: fall linear infinite;
       z-index: 1;
     }
+
     .heart::before, .heart::after {
       content: '';
       position: absolute;
@@ -118,7 +130,6 @@
       }
     }
 
-    /* Stars and comets (diagonal fall) */
     .star {
       position: fixed;
       background: white;
@@ -127,6 +138,7 @@
       animation: diagonalFall linear infinite;
       opacity: 0.8;
     }
+
     @keyframes diagonalFall {
       from {
         transform: translate(0, 0);
@@ -135,6 +147,16 @@
       to {
         transform: translate(-200px, 100vh);
         opacity: 0;
+      }
+    }
+
+    @media (max-width: 600px) {
+      .message p {
+        font-size: 1.2em;
+      }
+      .response {
+        font-size: 1em;
+        top: 15%;
       }
     }
   </style>
@@ -166,6 +188,9 @@
     const response = document.getElementById("response");
     const body = document.body;
 
+    let heartInterval;
+    let starInterval;
+
     envelope.addEventListener("click", () => {
       envelope.style.display = "none";
       message.style.display = "block";
@@ -173,7 +198,8 @@
     });
 
     loveBtn.addEventListener("click", () => {
-      body.style.background = "#000022"; // Céu escuro
+      clearInterval(heartInterval); // Para os corações
+      body.style.background = "#000022"; // Tema espaço
       document.querySelector('.container').style.display = 'none';
       response.style.display = "block";
       startStarFall();
@@ -201,11 +227,16 @@
       setTimeout(() => star.remove(), 7000);
     }
 
-    function startStarFall() {
-      setInterval(createStar, 50); // Mais estrelas caindo continuamente
+    function startHeartFall() {
+      heartInterval = setInterval(createHeart, 300);
     }
 
-    setInterval(createHeart, 300); // Corações sempre caindo
+    function startStarFall() {
+      starInterval = setInterval(createStar, 50);
+    }
+
+    // Inicia a queda de corações assim que a página carregar
+    startHeartFall();
   </script>
 </body>
 </html>
