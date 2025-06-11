@@ -27,6 +27,7 @@
       transform: translate(-50%, -50%);
       cursor: pointer;
       z-index: 10;
+      transition: opacity 0.5s ease, transform 0.5s ease;
     }
 
     .envelope {
@@ -56,15 +57,10 @@
       transform: rotateX(180deg);
     }
 
-    .opened .envelope-container {
-      animation: disappear 0.5s forwards;
-    }
-
-    @keyframes disappear {
-      to {
-        opacity: 0;
-        transform: scale(0);
-      }
+    .hide-envelope {
+      opacity: 0;
+      transform: scale(0);
+      pointer-events: none;
     }
 
     .content {
@@ -165,17 +161,24 @@
   </div>
 
   <script>
-    const envelope = document.getElementById("envelopeContainer");
+    const envelopeContainer = document.getElementById("envelopeContainer");
     const flap = document.getElementById("flap");
     const content = document.getElementById("content");
 
-    envelope.addEventListener("click", () => {
-      envelope.classList.add("opened");
+    envelopeContainer.addEventListener("click", () => {
+      envelopeContainer.classList.add("opened");
+
+      // Abre a aba da carta
+      flap.style.transform = "rotateX(180deg)";
+
+      // Após animação, esconde a carta e mostra o conteúdo
       setTimeout(() => {
+        envelopeContainer.classList.add("hide-envelope");
         content.classList.add("show");
       }, 1000);
     });
 
+    // corações
     function createHeart() {
       const heart = document.createElement("div");
       heart.classList.add("heart");
