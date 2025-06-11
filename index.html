@@ -3,8 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Dia dos Namorados</title>
-  <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@500;700&display=swap" rel="stylesheet">
+  <title>Feliz Dia dos Namorados</title>
   <style>
     * {
       margin: 0;
@@ -12,117 +11,83 @@
       box-sizing: border-box;
     }
     body {
-      font-family: 'Quicksand', sans-serif;
-      background: #ffe6f0 url('https://i.imgur.com/mTVfhUJ.png'); /* fundo com rosas (padrão) */
-      background-size: cover;
+      font-family: 'Arial Rounded MT Bold', 'Segoe UI', sans-serif;
+      background: #ffd6e0 url('https://i.imgur.com/l1NnblR.png') repeat;
+      color: #6d214f;
+      text-align: center;
       overflow: hidden;
+      position: relative;
       height: 100vh;
     }
-
     .container {
-      height: 100vh;
       display: flex;
       justify-content: center;
       align-items: center;
+      height: 100vh;
       flex-direction: column;
-      position: relative;
       z-index: 10;
-      text-align: center;
-    }
-
-    .card-btn {
-      width: 150px;
-      height: 100px;
-      background: white;
-      border: none;
-      border-radius: 10px;
       position: relative;
-      cursor: pointer;
-      box-shadow: 0 0 15px rgba(0,0,0,0.3);
     }
-
-    .card-btn::before {
-      content: "";
+    .envelope {
+      width: 200px;
+      height: 100px;
+      background: #fff;
+      position: relative;
+      border-radius: 10px;
+      box-shadow: 0 0 20px rgba(0,0,0,0.2);
+      cursor: pointer;
+    }
+    .envelope::before {
+      content: '';
       position: absolute;
       width: 0;
       height: 0;
-      border-left: 75px solid transparent;
-      border-right: 75px solid transparent;
-      border-bottom: 50px solid #ff66b2;
-      top: -50px;
-      left: 0;
-    }
-
-    .message {
-      display: none;
-      flex-direction: column;
-      align-items: center;
-      color: #880e4f;
-    }
-
-    .message p {
-      font-size: 1.6em;
-      margin: 10px;
-    }
-
-    .love-btn {
-      background-color: #8e24aa;
-      color: white;
-      padding: 12px 24px;
-      border: none;
-      border-radius: 30px;
-      font-size: 1em;
-      margin-top: 20px;
-      box-shadow: 0 0 10px rgba(0,0,0,0.2);
-      cursor: pointer;
-    }
-
-    .space {
-      display: none;
-      background: radial-gradient(#000, #02030f);
-      color: white;
-      position: fixed;
+      border-style: solid;
+      border-width: 50px 100px 0 100px;
+      border-color: #f78fb3 transparent transparent transparent;
       top: 0;
       left: 0;
-      width: 100vw;
-      height: 100vh;
-      z-index: 20;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      flex-direction: column;
-      padding: 20px;
-      text-align: center;
     }
-
-    .space p {
-      font-size: 1.5em;
-      max-width: 90%;
+    .message, .buttons, .response, .restart {
+      display: none;
+      z-index: 10;
     }
-
-    .restart-btn {
-      margin-top: 20px;
-      background: #8e24aa;
-      border: none;
+    .message p {
+      font-size: 2em;
+      margin: 15px 0;
+    }
+    .heart-button {
+      background-color: #8e44ad;
       color: white;
-      padding: 10px 20px;
+      border: none;
       border-radius: 30px;
+      padding: 12px 25px;
+      font-size: 1.3em;
+      cursor: pointer;
+      box-shadow: 0 0 10px rgba(0,0,0,0.3);
+      margin-top: 20px;
+    }
+    .restart-button {
+      background-color: #f39c12;
+      color: white;
+      border: none;
+      border-radius: 30px;
+      padding: 10px 20px;
       font-size: 1em;
       cursor: pointer;
+      margin-top: 30px;
     }
-
-    .falling {
+    .heart {
       position: fixed;
       width: 20px;
       height: 20px;
       background: red;
       transform: rotate(45deg);
       animation: fall 5s linear infinite;
-      z-index: 5;
+      z-index: 1;
     }
-
-    .falling::before,
-    .falling::after {
+    .heart::before,
+    .heart::after {
       content: "";
       position: absolute;
       width: 20px;
@@ -130,95 +95,106 @@
       background: red;
       border-radius: 50%;
     }
-    .falling::before { top: -10px; left: 0; }
-    .falling::after { left: -10px; top: 0; }
-
-    @keyframes fall {
-      from { transform: translateY(-10px) rotate(45deg); opacity: 1; }
-      to { transform: translateY(100vh) rotate(45deg); opacity: 0; }
+    .heart::before {
+      top: -10px;
+      left: 0;
     }
-
+    .heart::after {
+      left: -10px;
+      top: 0;
+    }
+    .space {
+      background: #000 url('https://i.imgur.com/3W5d2W9.png') repeat;
+      background-size: cover;
+      animation: moveBg 60s linear infinite;
+    }
     .star, .comet {
       position: fixed;
-      z-index: 3;
-    }
-
-    .star {
-      width: 3px;
-      height: 3px;
       background: white;
       border-radius: 50%;
-      animation: starFall 4s linear infinite;
+      z-index: 1;
     }
-
-    @keyframes starFall {
-      0% { transform: translate(0, 0); opacity: 1; }
-      100% { transform: translate(100vw, 100vh); opacity: 0; }
+    .star {
+      width: 2px;
+      height: 2px;
+      animation: fallDiagonal 5s linear infinite;
     }
-
     .comet {
-      width: 80px;
+      width: 4px;
       height: 4px;
-      background: linear-gradient(90deg, white, transparent);
-      border-radius: 2px;
-      transform: rotate(45deg);
-      animation: cometFall 3s linear forwards;
+      background: lightblue;
+      box-shadow: 0 0 20px lightblue;
+      animation: fallDiagonal 3s linear infinite;
     }
-
-    @keyframes cometFall {
-      0% { transform: translate(-100px, -100px) rotate(45deg); opacity: 1; }
-      100% { transform: translate(100vw, 100vh) rotate(45deg); opacity: 0; }
+    .response {
+      position: fixed;
+      top: 40%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      font-size: 1.5em;
+      color: white;
+      z-index: 20;
+      text-shadow: 0 0 10px black;
+    }
+    @keyframes fall {
+      to {
+        transform: translateY(100vh) rotate(45deg);
+        opacity: 0;
+      }
+    }
+    @keyframes fallDiagonal {
+      0% { top: -10px; left: 50%; opacity: 1; }
+      100% { top: 100vh; left: 60%; opacity: 0; }
+    }
+    @keyframes moveBg {
+      0% { background-position: 0 0; }
+      100% { background-position: 1000px 1000px; }
     }
   </style>
 </head>
 <body>
   <div class="container" id="container">
-    <button class="card-btn" id="cardBtn"></button>
+    <div class="envelope" id="envelope"></div>
     <div class="message" id="message">
       <p>FELIZ DIA DOS NAMORADOS MEU AMOR ❤</p>
       <p>Você é a luz que ilumina meus dias ☀</p>
-      <p>Eu te amo muito minha estrelinha</p>
+      <p>Eu te amo muito, minha estrelinha ⭐</p>
       <p>Juntos para sempre 🌺</p>
-      <button class="love-btn" id="loveBtn">💜 Quer saber o quanto te amo?</button>
+    </div>
+    <div class="buttons" id="buttons">
+      <button class="heart-button" id="loveBtn">💜 Quer saber o quanto te amo?</button>
+    </div>
+  </div>
+  <div class="response" id="response">
+    Na mesma quantidade das estrelas infinitas no céu ✨
+    <div class="restart" id="restart">
+      <button class="restart-button" onclick="location.reload()">🔁 Recomeçar</button>
     </div>
   </div>
 
-  <div class="space" id="space">
-    <p>Na mesma quantidade das estrelas infinitas no céu</p>
-    <button class="restart-btn" onclick="location.reload()">🔁 Recomeçar</button>
-  </div>
-
   <script>
-    const cardBtn = document.getElementById("cardBtn");
+    const envelope = document.getElementById("envelope");
     const message = document.getElementById("message");
+    const buttons = document.getElementById("buttons");
     const loveBtn = document.getElementById("loveBtn");
-    const space = document.getElementById("space");
+    const response = document.getElementById("response");
     const container = document.getElementById("container");
-    let heartInterval;
 
     function createHeart() {
       const heart = document.createElement("div");
-      heart.classList.add("falling");
+      heart.classList.add("heart");
       heart.style.left = Math.random() * window.innerWidth + "px";
-      heart.style.top = "-30px";
       heart.style.animationDuration = (Math.random() * 2 + 3) + "s";
       document.body.appendChild(heart);
-      setTimeout(() => heart.remove(), 6000);
-    }
-
-    function startHearts() {
-      heartInterval = setInterval(createHeart, 200);
-    }
-
-    function stopHearts() {
-      clearInterval(heartInterval);
+      setTimeout(() => heart.remove(), 5000);
     }
 
     function createStar() {
       const star = document.createElement("div");
       star.classList.add("star");
-      star.style.top = Math.random() * window.innerHeight + "px";
       star.style.left = Math.random() * window.innerWidth + "px";
+      star.style.top = "-10px";
+      star.style.animationDuration = (Math.random() * 3 + 2) + "s";
       document.body.appendChild(star);
       setTimeout(() => star.remove(), 5000);
     }
@@ -226,26 +202,29 @@
     function createComet() {
       const comet = document.createElement("div");
       comet.classList.add("comet");
-      comet.style.top = Math.random() * window.innerHeight / 2 + "px";
-      comet.style.left = Math.random() * window.innerWidth / 2 + "px";
+      comet.style.left = Math.random() * window.innerWidth + "px";
+      comet.style.top = "-10px";
+      comet.style.animationDuration = (Math.random() * 3 + 2) + "s";
       document.body.appendChild(comet);
-      setTimeout(() => comet.remove(), 3000);
+      setTimeout(() => comet.remove(), 5000);
     }
 
-    cardBtn.addEventListener("click", () => {
-      cardBtn.style.display = "none";
-      message.style.display = "flex";
+    const heartInterval = setInterval(createHeart, 300);
+
+    envelope.addEventListener("click", () => {
+      envelope.style.display = "none";
+      message.style.display = "block";
+      buttons.style.display = "block";
     });
 
     loveBtn.addEventListener("click", () => {
+      clearInterval(heartInterval);
+      document.body.classList.add("space");
       container.style.display = "none";
-      space.style.display = "flex";
-      stopHearts();
+      response.style.display = "block";
       setInterval(createStar, 100);
       setInterval(createComet, 2000);
     });
-
-    startHearts();
   </script>
 </body>
 </html>
