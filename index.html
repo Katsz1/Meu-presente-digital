@@ -2,97 +2,47 @@
 <html lang="pt-BR">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Dia dos Namorados 💜</title>
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Quicksand:wght@400;700&display=swap">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Feliz Dia dos Namorados 💖</title>
+  <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Poppins:wght@400;600&display=swap" rel="stylesheet">
   <style>
     * {
       margin: 0;
       padding: 0;
       box-sizing: border-box;
     }
+
     body {
-      font-family: 'Quicksand', sans-serif;
-      background: #e6ccff;
-      color: #333;
+      font-family: 'Poppins', sans-serif;
+      background: #f8d6eb;
       overflow: hidden;
-      position: relative;
+      transition: background 1s;
     }
 
-    .container {
-      height: 100vh;
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      align-items: center;
-      text-align: center;
-      padding: 20px;
-    }
-
-    .card-button {
-      width: 120px;
-      height: 80px;
-      background: white;
-      border: 2px solid #d88ce8;
-      border-radius: 10px;
-      position: relative;
-      cursor: pointer;
-      box-shadow: 0 0 15px rgba(0,0,0,0.2);
-      transition: transform 0.2s;
-    }
-
-    .card-button::before {
-      content: '';
+    .background {
       position: absolute;
-      width: 0;
-      height: 0;
-      border-style: solid;
-      border-width: 40px 60px 0 60px;
-      border-color: #d88ce8 transparent transparent transparent;
-      top: 0;
-      left: 0;
+      width: 100%;
+      height: 100%;
+      overflow: hidden;
+      z-index: -1;
     }
 
-    .messages {
-      display: none;
-      flex-direction: column;
-      gap: 10px;
-      font-size: 1.8em;
-      color: #5e0f6d;
-    }
-
-    .heart-button {
-      display: none;
-      margin-top: 30px;
-      background-color: #8e44ad;
-      color: white;
-      border: none;
-      padding: 12px 24px;
-      border-radius: 30px;
-      font-size: 1.2em;
-      cursor: pointer;
-      box-shadow: 0 0 10px rgba(0,0,0,0.4);
-      transition: transform 0.2s, background 0.3s;
-    }
-
-    .heart-button:hover {
-      background-color: #732d91;
-      transform: scale(1.05);
+    .heart, .star, .comet {
+      position: absolute;
+      top: -50px;
+      pointer-events: none;
+      animation: fall linear;
     }
 
     .heart {
-      position: fixed;
       width: 20px;
       height: 20px;
       background: red;
       transform: rotate(45deg);
-      animation: fallHeart 6s linear infinite;
-      z-index: 0;
+      animation-duration: 5s;
     }
 
-    .heart::before,
-    .heart::after {
+    .heart::before, .heart::after {
       content: "";
       position: absolute;
       width: 20px;
@@ -100,209 +50,214 @@
       background: red;
       border-radius: 50%;
     }
+
     .heart::before {
       top: -10px;
       left: 0;
     }
+
     .heart::after {
       left: -10px;
       top: 0;
     }
 
-    @keyframes fallHeart {
-      0% {
-        top: -10px;
-        opacity: 1;
-        transform: rotate(45deg) translateX(0);
-      }
-      100% {
-        top: 100vh;
-        opacity: 0;
-        transform: rotate(45deg) translateX(100px);
-      }
+    @keyframes fall {
+      0% { top: -50px; opacity: 1; transform: translateX(0); }
+      100% { top: 100vh; opacity: 0; transform: translateX(50px); }
+    }
+
+    @keyframes diagonal-fall {
+      0% { top: -10px; left: 100vw; opacity: 1; }
+      100% { top: 100vh; left: -50px; opacity: 0; }
+    }
+
+    .container {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+      height: 100vh;
+      flex-direction: column;
+      z-index: 10;
+      padding: 20px;
+    }
+
+    .letter-btn {
+      width: 120px;
+      height: 80px;
+      background: white;
+      border: 2px solid #d63384;
+      border-radius: 8px;
+      position: relative;
+      cursor: pointer;
+      box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+    }
+
+    .letter-btn::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      border-style: solid;
+      border-width: 40px 60px 0 60px;
+      border-color: #d63384 transparent transparent transparent;
+    }
+
+    .message {
+      display: none;
+      font-family: 'Great Vibes', cursive;
+      font-size: 2rem;
+      color: #6d214f;
+      line-height: 1.6;
+      margin-bottom: 30px;
+    }
+
+    .love-btn {
+      background-color: #8e44ad;
+      color: white;
+      border: none;
+      border-radius: 30px;
+      padding: 12px 24px;
+      font-size: 1.2rem;
+      cursor: pointer;
+      transition: transform 0.2s;
+    }
+
+    .love-btn:hover {
+      transform: scale(1.05);
     }
 
     .space-theme {
-      background: linear-gradient(to bottom, #000010, #000022);
+      background: radial-gradient(ellipse at bottom, #1b2735 0%, #090a0f 100%);
       color: white;
     }
 
-    .stars, .comet, .moon {
-      position: fixed;
-      pointer-events: none;
-      z-index: 1;
+    .space-message {
+      font-size: 1.8rem;
+      font-family: 'Poppins', sans-serif;
+      text-align: center;
+      max-width: 90%;
+      margin-top: 60px;
     }
 
-    .star {
-      width: 2px;
-      height: 2px;
-      background: white;
-      border-radius: 50%;
-      animation: fallStar 5s linear infinite;
-    }
-
-    @keyframes fallStar {
-      from {
-        top: -10px;
-        left: calc(100% * var(--rand));
-        opacity: 1;
-      }
-      to {
-        top: 110%;
-        left: calc(100% * var(--rand) + 50px);
-        opacity: 0;
-      }
-    }
-
-    .comet {
-      width: 60px;
-      height: 2px;
-      background: linear-gradient(90deg, white, transparent);
-      transform: rotate(45deg);
-      animation: flyComet 4s linear infinite;
-    }
-
-    @keyframes flyComet {
-      0% {
-        top: -50px;
-        left: -50px;
-        opacity: 1;
-      }
-      100% {
-        top: 110%;
-        left: 110%;
-        opacity: 0;
-      }
+    .restart-btn {
+      margin-top: 30px;
+      background-color: #444;
+      color: white;
+      padding: 10px 20px;
+      border-radius: 20px;
+      border: none;
+      cursor: pointer;
     }
 
     .moon {
       width: 80px;
       height: 80px;
-      background: #ddd;
+      background: #f0f0f0;
       border-radius: 50%;
+      position: absolute;
       top: 40px;
-      right: 40px;
-      box-shadow: 0 0 30px white;
+      right: 30px;
+      box-shadow: 0 0 20px 5px #fff;
     }
 
-    .space-message {
-      display: none;
-      position: fixed;
-      top: 50%;
-      left: 50%;
-      transform: translate(-50%, -50%);
-      font-size: 1.6em;
-      text-align: center;
-      z-index: 5;
-      padding: 20px;
-      color: white;
+    .star {
+      width: 3px;
+      height: 3px;
+      background: white;
+      border-radius: 50%;
+      animation: diagonal-fall linear;
     }
 
-    .restart-button {
-      display: none;
-      position: fixed;
-      bottom: 30px;
-      left: 50%;
-      transform: translateX(-50%);
-      background-color: #5555ff;
-      color: white;
-      border: none;
-      padding: 12px 24px;
-      border-radius: 30px;
-      font-size: 1em;
-      cursor: pointer;
-      z-index: 5;
+    .comet {
+      width: 6px;
+      height: 6px;
+      background: #fff;
+      border-radius: 50%;
+      box-shadow: -10px 0 20px 5px rgba(255,255,255,0.3);
+      animation: diagonal-fall linear;
     }
+
   </style>
 </head>
 <body>
-  <div class="container" id="mainContainer">
-    <div class="card-button" id="cardBtn"></div>
+  <div class="background" id="background"></div>
 
-    <div class="messages" id="messages">
+  <div class="container" id="mainContent">
+    <div class="letter-btn" id="letterBtn"></div>
+
+    <div class="message" id="message">
       <p>FELIZ DIA DOS NAMORADOS MEU AMOR ❤</p>
       <p>Você é a luz que ilumina meus dias ☀</p>
-      <p>Eu te amo muito minha estrelinha</p>
+      <p>Eu te amo muito, minha estrelinha ⭐</p>
       <p>Juntos para sempre 🌺</p>
     </div>
 
-    <button class="heart-button" id="loveBtn">💜 Quer saber o quanto te amo?</button>
+    <button class="love-btn" id="loveBtn" style="display: none;">💜 Quer saber o quanto te amo?</button>
   </div>
 
-  <div class="space-message" id="spaceMessage">
-    Na mesma quantidade das estrelas infinitas no céu
+  <div class="container space-theme" id="spaceContent" style="display: none;">
+    <div class="moon"></div>
+    <p class="space-message">Na mesma quantidade das estrelas infinitas no céu ✨</p>
+    <button class="restart-btn" onclick="location.reload()">🔁 Recomeçar</button>
   </div>
-
-  <button class="restart-button" id="restartBtn">🔁 Recomeçar</button>
 
   <script>
-    const cardBtn = document.getElementById('cardBtn');
-    const messages = document.getElementById('messages');
-    const loveBtn = document.getElementById('loveBtn');
-    const spaceMessage = document.getElementById('spaceMessage');
-    const restartBtn = document.getElementById('restartBtn');
-    const container = document.getElementById('mainContainer');
+    const letterBtn = document.getElementById("letterBtn");
+    const message = document.getElementById("message");
+    const loveBtn = document.getElementById("loveBtn");
+    const background = document.getElementById("background");
+    const spaceContent = document.getElementById("spaceContent");
+    const mainContent = document.getElementById("mainContent");
+
+    let fallingHearts;
+    let fallingStars;
+    let fallingComets;
 
     function createHeart() {
-      const heart = document.createElement('div');
-      heart.classList.add('heart');
+      const heart = document.createElement("div");
+      heart.classList.add("heart");
       heart.style.left = Math.random() * window.innerWidth + "px";
-      document.body.appendChild(heart);
+      heart.style.animationDuration = (Math.random() * 3 + 2) + "s";
+      background.appendChild(heart);
       setTimeout(() => heart.remove(), 6000);
     }
 
-    let heartInterval = setInterval(createHeart, 300);
-
-    cardBtn.addEventListener('click', () => {
-      cardBtn.style.display = 'none';
-      messages.style.display = 'flex';
-      loveBtn.style.display = 'inline-block';
-    });
-
-    loveBtn.addEventListener('click', () => {
-      document.body.classList.add('space-theme');
-      messages.style.display = 'none';
-      loveBtn.style.display = 'none';
-      spaceMessage.style.display = 'block';
-      restartBtn.style.display = 'block';
-      clearInterval(heartInterval); // Parar corações
-      generateStars();
-      generateComets();
-      addMoon();
-    });
-
-    restartBtn.addEventListener('click', () => {
-      location.reload();
-    });
-
-    function generateStars() {
-      setInterval(() => {
-        const star = document.createElement('div');
-        star.classList.add('star');
-        star.style.setProperty('--rand', Math.random());
-        star.style.left = Math.random() * window.innerWidth + "px";
-        star.style.top = "-10px";
-        document.body.appendChild(star);
-        setTimeout(() => star.remove(), 6000);
-      }, 100);
+    function createStar() {
+      const star = document.createElement("div");
+      star.classList.add("star");
+      star.style.left = Math.random() * window.innerWidth + "px";
+      star.style.animationDuration = (Math.random() * 5 + 4) + "s";
+      background.appendChild(star);
+      setTimeout(() => star.remove(), 7000);
     }
 
-    function generateComets() {
-      setInterval(() => {
-        const comet = document.createElement('div');
-        comet.classList.add('comet');
-        comet.style.top = Math.random() * -100 + "px";
-        comet.style.left = Math.random() * window.innerWidth + "px";
-        document.body.appendChild(comet);
-        setTimeout(() => comet.remove(), 4000);
-      }, 5000);
+    function createComet() {
+      const comet = document.createElement("div");
+      comet.classList.add("comet");
+      comet.style.left = Math.random() * window.innerWidth + "px";
+      comet.style.animationDuration = (Math.random() * 5 + 4) + "s";
+      background.appendChild(comet);
+      setTimeout(() => comet.remove(), 7000);
     }
 
-    function addMoon() {
-      const moon = document.createElement('div');
-      moon.classList.add('moon');
-      document.body.appendChild(moon);
-    }
+    letterBtn.addEventListener("click", () => {
+      letterBtn.style.display = "none";
+      message.style.display = "block";
+      loveBtn.style.display = "inline-block";
+    });
+
+    loveBtn.addEventListener("click", () => {
+      mainContent.style.display = "none";
+      spaceContent.style.display = "flex";
+      document.body.classList.add("space-theme");
+      clearInterval(fallingHearts);
+      fallingStars = setInterval(createStar, 150);
+      fallingComets = setInterval(createComet, 3000);
+    });
+
+    // Start hearts from beginning
+    fallingHearts = setInterval(createHeart, 200);
   </script>
 </body>
 </html>
