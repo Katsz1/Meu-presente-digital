@@ -3,326 +3,137 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Para minha estrela, July ✨</title>
-  <link rel="icon" type="image/png" href="https://cdn-icons-png.flaticon.com/512/616/616490.png" />
+  <title>Feliz Dia dos Namorados</title>
+  <link rel="icon" href="https://cdn-icons-png.flaticon.com/512/616/616408.png" type="image/png">
   <style>
-    * {
+    body {
       margin: 0;
       padding: 0;
-      box-sizing: border-box;
-    }
-
-    body {
-      background: linear-gradient(to bottom, #660000, #990000);
-      color: white;
-      font-family: 'Comic Sans MS', cursive, sans-serif;
-      height: 100vh;
       overflow: hidden;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: linear-gradient(to bottom, #ff4e50, #f9d423);
+      color: white;
       text-align: center;
-      position: relative;
-      transition: background 1s ease;
     }
-
-    .envelope-container {
+    .envelope {
+      width: 200px;
+      height: 100px;
+      background: #fff;
       position: absolute;
       top: 50%;
       left: 50%;
       transform: translate(-50%, -50%);
-      cursor: pointer;
-      z-index: 10;
-      transition: opacity 0.5s ease, transform 0.5s ease;
-    }
-
-    .envelope {
-      width: 180px;
-      height: 100px;
-      background: #fff0f5;
-      border: 2px solid #cc3366;
       border-radius: 10px;
-      position: relative;
-      box-shadow: 0 0 10px #ff99cc;
+      box-shadow: 0 0 20px rgba(0,0,0,0.2);
+      cursor: pointer;
+      transition: opacity 0.5s;
     }
-
-    .flap {
+    .envelope::before, .envelope::after {
+      content: '';
+      position: absolute;
       width: 0;
       height: 0;
-      border-left: 90px solid transparent;
-      border-right: 90px solid transparent;
-      border-bottom: 50px solid #ffccdd;
-      position: absolute;
-      top: -50px;
+      border-style: solid;
+    }
+    .envelope::before {
+      border-width: 50px 100px 0 100px;
+      border-color: #ff4e50 transparent transparent transparent;
+      top: 0;
       left: 0;
-      transition: transform 0.6s ease;
-      transform-origin: bottom center;
     }
-
-    .opened .flap {
-      transform: rotateX(180deg);
-    }
-
-    .hide-envelope {
-      opacity: 0;
-      transform: scale(0);
-      pointer-events: none;
-    }
-
-    .content {
-      opacity: 0;
-      transition: opacity 1s ease;
-      z-index: 1;
-      position: relative;
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      align-items: center;
-      height: 100vh;
-      padding: 20px;
-    }
-
-    .content.show {
-      opacity: 1;
-    }
-
-    h1 {
-      font-size: 2.2em;
-      color: #ffccff;
-      text-shadow: 0 0 10px #ff99ff, 0 0 20px #ff3399;
-      margin-bottom: 20px;
-    }
-
     .message {
-      font-size: 1.5em;
-      margin: 15px 0;
-      animation: glow 1.5s infinite alternate;
-      max-width: 90%;
+      display: none;
+      position: absolute;
+      top: 10%;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 90%;
+      max-width: 600px;
+      font-size: 1.8em;
+      color: white;
+      animation: fadeIn 2s ease-in-out forwards;
     }
-
-    @keyframes glow {
-      from {
-        text-shadow: 0 0 10px #fff, 0 0 20px #ff3399;
-      }
-      to {
-        text-shadow: 0 0 20px #ffccff, 0 0 30px #ff99cc;
-      }
+    .show .message {
+      display: block;
     }
-
+    @keyframes fadeIn {
+      from { opacity: 0; }
+      to { opacity: 1; }
+    }
     .heart {
       position: absolute;
       width: 20px;
       height: 20px;
-      background-color: pink;
+      background: red;
       transform: rotate(45deg);
-      animation: float 8s linear infinite;
-      z-index: 0;
+      animation: fall 5s linear infinite;
     }
-
     .heart::before,
     .heart::after {
       content: "";
       position: absolute;
       width: 20px;
       height: 20px;
-      background-color: pink;
+      background: red;
       border-radius: 50%;
     }
-
     .heart::before {
       top: -10px;
       left: 0;
     }
-
     .heart::after {
       left: -10px;
       top: 0;
     }
-
-    @keyframes float {
-      0% {
+    @keyframes fall {
+      to {
         transform: translateY(100vh) rotate(45deg);
-        opacity: 1;
-      }
-      100% {
-        transform: translateY(-10vh) rotate(45deg);
         opacity: 0;
       }
-    }
-
-    .replay-btn, .love-btn {
-      margin-top: 30px;
-      padding: 15px 25px;
-      font-size: 1em;
-      border: none;
-      border-radius: 50px;
-      cursor: pointer;
-      transition: all 0.3s ease;
-    }
-
-    .replay-btn {
-      background-color: #ff99cc;
-      color: white;
-      box-shadow: 0 0 10px #ff3399;
-    }
-
-    .replay-btn:hover {
-      background-color: #ff66aa;
-    }
-
-    .love-btn {
-      background-color: #800080;
-      color: white;
-      font-weight: bold;
-      border-radius: 50%;
-      padding: 20px;
-      font-size: 1.1em;
-      box-shadow: 0 0 15px #cc66ff;
-    }
-
-    .space-mode {
-      background: radial-gradient(ellipse at bottom, #1b2735 0%, #090a0f 100%);
-    }
-
-    .star, .comet {
-      position: absolute;
-      background: white;
-      animation: twinkle 3s infinite;
-      border-radius: 50%;
-      opacity: 0.8;
-    }
-
-    .star {
-      width: 2px;
-      height: 2px;
-    }
-
-    .comet {
-      width: 3px;
-      height: 3px;
-      background: #aaffff;
-      animation: cometFall 4s linear infinite;
-    }
-
-    .big-star {
-      width: 5px;
-      height: 5px;
-      background: #fff9c4;
-      animation: cometFall 6s linear infinite;
-    }
-
-    @keyframes twinkle {
-      0%, 100% { opacity: 0.3; }
-      50% { opacity: 1; }
-    }
-
-    @keyframes cometFall {
-      0% {
-        transform: translateY(-10vh) translateX(-50vw);
-        opacity: 1;
-      }
-      100% {
-        transform: translateY(100vh) translateX(50vw);
-        opacity: 0;
-      }
-    }
-
-    @media (max-width: 500px) {
-      h1 { font-size: 1.7em; }
-      .message { font-size: 1.2em; }
     }
   </style>
 </head>
 <body>
 
-  <div class="envelope-container" id="envelopeContainer">
-    <div class="envelope" id="envelope"></div>
-    <div class="flap" id="flap"></div>
+  <div class="envelope" id="envelope"></div>
+
+  <div class="message" id="message">
+    <p style="font-size: 2em;">FELIZ DIA DOS NAMORADOS, MEU AMOR</p>
+    <p style="font-size: 1.5em;">VOCÊ É A MULHER MAIS PERFEITA DESSE MUNDO</p>
+    <p style="font-size: 1.5em;">TE AMO, MINHA ESTRELINHA</p>
+    <p style="font-size: 1.5em;">VOCÊ É O RAIO DE SOL QUE ILUMINA TODOS OS MEUS DIAS</p>
   </div>
 
-  <div class="content" id="content">
-    <h1>FELIZ DIA DOS NAMORADOS, MEU AMOR 💘</h1>
-    <div class="message">VOCÊ É A MULHER MAIS PERFEITA DESSE MUNDO</div>
-    <div class="message">TE AMO MINHA ESTRELINHA 🌟</div>
-    <div class="message">VOCÊ É O RAIO DE SOL QUE ILUMINA TODOS OS MEUS DIAS ☀️</div>
-
-    <button class="love-btn" id="loveBtn">Você quer ver o quanto te amo?</button>
-    <button class="replay-btn" onclick="location.reload()">Ver de novo 💌</button>
-  </div>
-
-  <!-- MÚSICA DE FUNDO (YouTube embed invisível) -->
-  <iframe id="ytplayer" style="display:none;" width="0" height="0"
-    src="https://www.youtube.com/embed/AkC-b0aFw1I?enablejsapi=1&version=3" 
-    frameborder="0" allow="autoplay">
-  </iframe>
+  <audio id="bgMusic" autoplay loop style="display:none">
+    <source src="https://docs.google.com/uc?export=download&id=1DIXqs8ziT6IqmUwMrfTiC1NkT1OpwzXW" type="audio/mpeg">
+  </audio>
 
   <script>
-    const envelopeContainer = document.getElementById("envelopeContainer");
-    const flap = document.getElementById("flap");
-    const content = document.getElementById("content");
-    const loveBtn = document.getElementById("loveBtn");
+    const envelope = document.getElementById("envelope");
+    const message = document.getElementById("message");
+    const music = document.getElementById("bgMusic");
 
-    // Corações flutuando
+    envelope.addEventListener("click", () => {
+      envelope.style.opacity = 0;
+      setTimeout(() => {
+        envelope.style.display = "none";
+        message.classList.add("show");
+        music.play();
+      }, 500);
+    });
+
     function createHeart() {
       const heart = document.createElement("div");
       heart.classList.add("heart");
       heart.style.left = Math.random() * 100 + "vw";
-      heart.style.animationDuration = (5 + Math.random() * 5) + "s";
+      heart.style.animationDuration = (Math.random() * 2 + 3) + "s";
       document.body.appendChild(heart);
-      setTimeout(() => heart.remove(), 10000);
+      setTimeout(() => {
+        heart.remove();
+      }, 5000);
     }
     setInterval(createHeart, 300);
-
-    // Estrelas e cometas
-    function createStarOrComet() {
-      const el = document.createElement("div");
-      const r = Math.random();
-      if (r < 0.2) {
-        el.className = "comet";
-      } else if (r < 0.25) {
-        el.className = "big-star";
-      } else {
-        el.className = "star";
-      }
-      el.style.left = Math.random() * 100 + "vw";
-      el.style.top = Math.random() * 100 + "vh";
-      el.style.animationDuration = (3 + Math.random() * 5) + "s";
-      document.body.appendChild(el);
-      setTimeout(() => el.remove(), 8000);
-    }
-
-    // Música via YouTube
-    let player;
-    function onYouTubeIframeAPIReady() {
-      player = new YT.Player('ytplayer');
-    }
-    function playMusic() {
-      if (player && player.playVideo) {
-        player.playVideo();
-      }
-    }
-
-    // Envelope clicado
-    envelopeContainer.addEventListener("click", () => {
-      envelopeContainer.classList.add("opened");
-      flap.style.transform = "rotateX(180deg)";
-      setTimeout(() => {
-        envelopeContainer.classList.add("hide-envelope");
-        content.classList.add("show");
-        playMusic();
-      }, 1000);
-    });
-
-    // Botão "quanto te amo"
-    loveBtn.addEventListener("click", () => {
-      document.body.classList.add("space-mode");
-      document.querySelectorAll(".message").forEach(m => m.remove());
-      document.querySelector("h1").innerText = "A mesma quantidade infinita de estrelas no céu ✨";
-      setInterval(createStarOrComet, 100);
-    });
-
-    // Carrega a API do YouTube
-    const tag = document.createElement('script');
-    tag.src = "https://www.youtube.com/iframe_api";
-    const firstScriptTag = document.getElementsByTagName('script')[0];
-    firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
   </script>
+
 </body>
 </html>
