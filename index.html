@@ -5,19 +5,28 @@
   <title>Para minha estrela, July ✨</title>
   <style>
     * {
-      box-sizing: border-box;
       margin: 0;
       padding: 0;
+      box-sizing: border-box;
     }
 
     body {
       background: linear-gradient(to bottom, #660000, #990000);
       color: white;
       font-family: 'Comic Sans MS', cursive, sans-serif;
-      text-align: center;
       height: 100vh;
       overflow: hidden;
+      text-align: center;
       position: relative;
+    }
+
+    .envelope-container {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      cursor: pointer;
+      z-index: 10;
     }
 
     .envelope {
@@ -26,17 +35,12 @@
       background: #fff0f5;
       border: 2px solid #cc3366;
       border-radius: 10px;
-      position: absolute;
-      top: 50%;
-      left: 50%;
-      transform: translate(-50%, -50%);
-      cursor: pointer;
-      transition: transform 0.5s ease;
+      position: relative;
       box-shadow: 0 0 10px #ff99cc;
     }
 
     .flap {
-      width: 200px;
+      width: 0;
       height: 0;
       border-left: 100px solid transparent;
       border-right: 100px solid transparent;
@@ -44,25 +48,34 @@
       position: absolute;
       top: -60px;
       left: 0;
-      transform-origin: bottom;
       transition: transform 0.6s ease;
+      transform-origin: bottom center;
     }
 
     .opened .flap {
       transform: rotateX(180deg);
     }
 
-    .opened .envelope {
-      transform: scale(0);
+    .opened .envelope-container {
+      animation: disappear 0.5s forwards;
+    }
+
+    @keyframes disappear {
+      to {
+        opacity: 0;
+        transform: scale(0);
+      }
     }
 
     .content {
       opacity: 0;
       padding: 30px;
       transition: opacity 1s ease;
+      z-index: 1;
+      position: relative;
     }
 
-    .show .content {
+    .content.show {
       opacity: 1;
     }
 
@@ -81,10 +94,10 @@
 
     @keyframes glow {
       from {
-        text-shadow: 0 0 10px #fff, 0 0 20px #ff3399, 0 0 30px #ff0066;
+        text-shadow: 0 0 10px #fff, 0 0 20px #ff3399;
       }
       to {
-        text-shadow: 0 0 20px #ffccff, 0 0 30px #ff99cc, 0 0 40px #ff3399;
+        text-shadow: 0 0 20px #ffccff, 0 0 30px #ff99cc;
       }
     }
 
@@ -131,12 +144,13 @@
 </head>
 <body>
 
-  <!-- Carta animada -->
-  <div class="envelope" id="envelope">
-    <div class="flap"></div>
+  <!-- Envelope -->
+  <div class="envelope-container" id="envelopeContainer">
+    <div class="envelope" id="envelope"></div>
+    <div class="flap" id="flap"></div>
   </div>
 
-  <!-- Conteúdo aparece após abrir -->
+  <!-- Mensagem aparece depois -->
   <div class="content" id="content">
     <h1>FELIZ DIA DOS NAMORADOS, MEU AMOR 💘</h1>
     <div class="message">VOCÊ É A MULHER MAIS PERFEITA DESSE MUNDO</div>
@@ -144,7 +158,8 @@
   </div>
 
   <script>
-    const envelope = document.getElementById("envelope");
+    const envelope = document.getElementById("envelopeContainer");
+    const flap = document.getElementById("flap");
     const content = document.getElementById("content");
 
     envelope.addEventListener("click", () => {
@@ -167,5 +182,6 @@
 
     setInterval(createHeart, 300);
   </script>
+
 </body>
 </html>
