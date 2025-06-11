@@ -183,12 +183,15 @@
 
     .star, .comet {
       position: absolute;
-      width: 2px;
-      height: 2px;
       background: white;
       animation: twinkle 3s infinite;
       border-radius: 50%;
       opacity: 0.8;
+    }
+
+    .star {
+      width: 2px;
+      height: 2px;
     }
 
     .comet {
@@ -196,6 +199,13 @@
       height: 3px;
       background: #aaffff;
       animation: cometFall 4s linear infinite;
+    }
+
+    .big-star {
+      width: 5px;
+      height: 5px;
+      background: #fff9c4;
+      animation: cometFall 6s linear infinite;
     }
 
     @keyframes twinkle {
@@ -265,7 +275,14 @@
 
     function createStarOrComet() {
       const el = document.createElement("div");
-      el.className = Math.random() < 0.3 ? "comet" : "star";
+      const r = Math.random();
+      if (r < 0.2) {
+        el.className = "comet";
+      } else if (r < 0.25) {
+        el.className = "big-star";
+      } else {
+        el.className = "star";
+      }
       el.style.left = Math.random() * 100 + "vw";
       el.style.top = Math.random() * 100 + "vh";
       el.style.animationDuration = (3 + Math.random() * 5) + "s";
@@ -277,7 +294,7 @@
       document.body.classList.add("space-mode");
       document.querySelectorAll(".message").forEach(m => m.remove());
       document.querySelector("h1").innerText = "A mesma quantidade infinita de estrelas no céu ✨";
-      setInterval(createStarOrComet, 200);
+      setInterval(createStarOrComet, 100);
     });
   </script>
 
