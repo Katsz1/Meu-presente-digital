@@ -3,7 +3,9 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Feliz Dia dos Namorados</title>
+  <title>Dia dos Namorados 💜</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Quicksand:wght@400;700&display=swap">
   <style>
     * {
       margin: 0;
@@ -11,25 +13,84 @@
       box-sizing: border-box;
     }
     body {
-      font-family: 'Segoe UI', sans-serif;
+      font-family: 'Quicksand', sans-serif;
+      background: #e6ccff;
+      color: #333;
       overflow: hidden;
-      height: 100vh;
-      width: 100vw;
-      background: #ffe6f0;
       position: relative;
     }
-    .falling {
-      position: fixed;
-      top: -10px;
-      animation: fall linear infinite;
-      z-index: 1;
+
+    .container {
+      height: 100vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+      padding: 20px;
     }
+
+    .card-button {
+      width: 120px;
+      height: 80px;
+      background: white;
+      border: 2px solid #d88ce8;
+      border-radius: 10px;
+      position: relative;
+      cursor: pointer;
+      box-shadow: 0 0 15px rgba(0,0,0,0.2);
+      transition: transform 0.2s;
+    }
+
+    .card-button::before {
+      content: '';
+      position: absolute;
+      width: 0;
+      height: 0;
+      border-style: solid;
+      border-width: 40px 60px 0 60px;
+      border-color: #d88ce8 transparent transparent transparent;
+      top: 0;
+      left: 0;
+    }
+
+    .messages {
+      display: none;
+      flex-direction: column;
+      gap: 10px;
+      font-size: 1.8em;
+      color: #5e0f6d;
+    }
+
+    .heart-button {
+      display: none;
+      margin-top: 30px;
+      background-color: #8e44ad;
+      color: white;
+      border: none;
+      padding: 12px 24px;
+      border-radius: 30px;
+      font-size: 1.2em;
+      cursor: pointer;
+      box-shadow: 0 0 10px rgba(0,0,0,0.4);
+      transition: transform 0.2s, background 0.3s;
+    }
+
+    .heart-button:hover {
+      background-color: #732d91;
+      transform: scale(1.05);
+    }
+
     .heart {
+      position: fixed;
       width: 20px;
       height: 20px;
       background: red;
       transform: rotate(45deg);
+      animation: fallHeart 6s linear infinite;
+      z-index: 0;
     }
+
     .heart::before,
     .heart::after {
       content: "";
@@ -44,179 +105,204 @@
       left: 0;
     }
     .heart::after {
-      top: 0;
       left: -10px;
+      top: 0;
     }
-    @keyframes fall {
+
+    @keyframes fallHeart {
       0% {
-        transform: translateY(0);
+        top: -10px;
         opacity: 1;
+        transform: rotate(45deg) translateX(0);
       }
       100% {
-        transform: translateY(100vh);
+        top: 100vh;
         opacity: 0;
+        transform: rotate(45deg) translateX(100px);
       }
     }
-    .container {
-      position: relative;
-      z-index: 10;
-      height: 100vh;
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      align-items: center;
-      text-align: center;
-      padding: 20px;
-    }
-    .card-btn {
-      background: #fff;
-      width: 120px;
-      height: 80px;
-      border-radius: 8px;
-      border: none;
-      box-shadow: 0 4px 10px rgba(0,0,0,0.2);
-      cursor: pointer;
-      font-size: 2rem;
-    }
-    .message {
-      font-size: 1.8rem;
-      color: #333;
-      font-weight: 500;
-      margin: 15px 0;
-    }
-    .love-btn {
-      background: purple;
-      color: white;
-      padding: 15px 25px;
-      border-radius: 30px;
-      font-size: 1.2rem;
-      border: none;
-      margin-top: 20px;
-      cursor: pointer;
-    }
+
     .space-theme {
-      background: radial-gradient(ellipse at bottom, #1b2735 0%, #090a0f 100%);
-      position: absolute;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      z-index: 20;
-      display: none;
+      background: linear-gradient(to bottom, #000010, #000022);
       color: white;
-      justify-content: center;
-      align-items: center;
-      flex-direction: column;
     }
-    .space-msg {
-      font-size: 1.5rem;
-      padding: 20px;
-      text-align: center;
+
+    .stars, .comet, .moon {
+      position: fixed;
+      pointer-events: none;
+      z-index: 1;
     }
-    .restart-btn {
-      margin-top: 20px;
-      background: #fff;
-      color: #000;
-      padding: 10px 20px;
-      border: none;
-      border-radius: 20px;
-      font-size: 1rem;
-      cursor: pointer;
-    }
-    .star, .comet {
-      position: absolute;
-      background: white;
-      border-radius: 50%;
-    }
+
     .star {
       width: 2px;
       height: 2px;
-      animation: starfall 3s linear infinite;
+      background: white;
+      border-radius: 50%;
+      animation: fallStar 5s linear infinite;
     }
+
+    @keyframes fallStar {
+      from {
+        top: -10px;
+        left: calc(100% * var(--rand));
+        opacity: 1;
+      }
+      to {
+        top: 110%;
+        left: calc(100% * var(--rand) + 50px);
+        opacity: 0;
+      }
+    }
+
     .comet {
-      width: 4px;
-      height: 4px;
-      animation: cometfall 2s linear infinite;
+      width: 60px;
+      height: 2px;
+      background: linear-gradient(90deg, white, transparent);
+      transform: rotate(45deg);
+      animation: flyComet 4s linear infinite;
     }
-    @keyframes starfall {
-      0% { transform: translate(0, 0); opacity: 1; }
-      100% { transform: translate(-100px, 100vh); opacity: 0; }
+
+    @keyframes flyComet {
+      0% {
+        top: -50px;
+        left: -50px;
+        opacity: 1;
+      }
+      100% {
+        top: 110%;
+        left: 110%;
+        opacity: 0;
+      }
     }
-    @keyframes cometfall {
-      0% { transform: translate(0, 0); opacity: 1; }
-      100% { transform: translate(-200px, 100vh); opacity: 0; }
+
+    .moon {
+      width: 80px;
+      height: 80px;
+      background: #ddd;
+      border-radius: 50%;
+      top: 40px;
+      right: 40px;
+      box-shadow: 0 0 30px white;
+    }
+
+    .space-message {
+      display: none;
+      position: fixed;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      font-size: 1.6em;
+      text-align: center;
+      z-index: 5;
+      padding: 20px;
+      color: white;
+    }
+
+    .restart-button {
+      display: none;
+      position: fixed;
+      bottom: 30px;
+      left: 50%;
+      transform: translateX(-50%);
+      background-color: #5555ff;
+      color: white;
+      border: none;
+      padding: 12px 24px;
+      border-radius: 30px;
+      font-size: 1em;
+      cursor: pointer;
+      z-index: 5;
     }
   </style>
 </head>
 <body>
-  <div class="container" id="main">
-    <button class="card-btn" id="openCard">✉️</button>
-    <div id="loveMessage" style="display: none">
-      <p class="message">FELIZ DIA DOS NAMORADOS MEU AMOR ❤</p>
-      <p class="message">Você é a luz que ilumina meus dias ☀</p>
-      <p class="message">Eu te amo muito minha estrelinha</p>
-      <p class="message">Juntos para sempre 🌺</p>
-      <button class="love-btn" id="showSpace">Quer saber o quanto te amo?</button>
+  <div class="container" id="mainContainer">
+    <div class="card-button" id="cardBtn"></div>
+
+    <div class="messages" id="messages">
+      <p>FELIZ DIA DOS NAMORADOS MEU AMOR ❤</p>
+      <p>Você é a luz que ilumina meus dias ☀</p>
+      <p>Eu te amo muito minha estrelinha</p>
+      <p>Juntos para sempre 🌺</p>
     </div>
+
+    <button class="heart-button" id="loveBtn">💜 Quer saber o quanto te amo?</button>
   </div>
 
-  <div class="space-theme" id="space">
-    <div class="space-msg">Na mesma quantidade das estrelas infinitas no céu</div>
-    <button class="restart-btn" onclick="location.reload()">Recomeçar</button>
+  <div class="space-message" id="spaceMessage">
+    Na mesma quantidade das estrelas infinitas no céu
   </div>
+
+  <button class="restart-button" id="restartBtn">🔁 Recomeçar</button>
 
   <script>
-    const openCard = document.getElementById('openCard');
-    const loveMessage = document.getElementById('loveMessage');
-    const showSpace = document.getElementById('showSpace');
-    const space = document.getElementById('space');
-
-    openCard.addEventListener('click', () => {
-      openCard.style.display = 'none';
-      loveMessage.style.display = 'block';
-    });
+    const cardBtn = document.getElementById('cardBtn');
+    const messages = document.getElementById('messages');
+    const loveBtn = document.getElementById('loveBtn');
+    const spaceMessage = document.getElementById('spaceMessage');
+    const restartBtn = document.getElementById('restartBtn');
+    const container = document.getElementById('mainContainer');
 
     function createHeart() {
-      const heart = document.createElement("div");
-      heart.classList.add("heart", "falling");
+      const heart = document.createElement('div');
+      heart.classList.add('heart');
       heart.style.left = Math.random() * window.innerWidth + "px";
-      heart.style.animationDuration = (Math.random() * 2 + 3) + "s";
       document.body.appendChild(heart);
-      setTimeout(() => heart.remove(), 5000);
+      setTimeout(() => heart.remove(), 6000);
     }
 
-    setInterval(createHeart, 300);
+    let heartInterval = setInterval(createHeart, 300);
 
-    function createStar() {
-      const star = document.createElement('div');
-      star.classList.add('star');
-      star.style.left = Math.random() * window.innerWidth + 'px';
-      star.style.top = '-10px';
-      space.appendChild(star);
-      setTimeout(() => star.remove(), 4000);
-    }
-
-    function createComet() {
-      const comet = document.createElement('div');
-      comet.classList.add('comet');
-      comet.style.left = Math.random() * window.innerWidth + 'px';
-      comet.style.top = '-10px';
-      space.appendChild(comet);
-      setTimeout(() => comet.remove(), 3000);
-    }
-
-    showSpace.addEventListener('click', () => {
-      document.getElementById('main').style.display = 'none';
-      space.style.display = 'flex';
-      // Parar corações
-      document.querySelectorAll('.heart').forEach(h => h.remove());
-      clearInterval(heartInterval);
-      // Iniciar estrelas e cometas
-      setInterval(createStar, 150);
-      setInterval(createComet, 2000);
+    cardBtn.addEventListener('click', () => {
+      cardBtn.style.display = 'none';
+      messages.style.display = 'flex';
+      loveBtn.style.display = 'inline-block';
     });
 
-    const heartInterval = setInterval(createHeart, 300);
+    loveBtn.addEventListener('click', () => {
+      document.body.classList.add('space-theme');
+      messages.style.display = 'none';
+      loveBtn.style.display = 'none';
+      spaceMessage.style.display = 'block';
+      restartBtn.style.display = 'block';
+      clearInterval(heartInterval); // Parar corações
+      generateStars();
+      generateComets();
+      addMoon();
+    });
+
+    restartBtn.addEventListener('click', () => {
+      location.reload();
+    });
+
+    function generateStars() {
+      setInterval(() => {
+        const star = document.createElement('div');
+        star.classList.add('star');
+        star.style.setProperty('--rand', Math.random());
+        star.style.left = Math.random() * window.innerWidth + "px";
+        star.style.top = "-10px";
+        document.body.appendChild(star);
+        setTimeout(() => star.remove(), 6000);
+      }, 100);
+    }
+
+    function generateComets() {
+      setInterval(() => {
+        const comet = document.createElement('div');
+        comet.classList.add('comet');
+        comet.style.top = Math.random() * -100 + "px";
+        comet.style.left = Math.random() * window.innerWidth + "px";
+        document.body.appendChild(comet);
+        setTimeout(() => comet.remove(), 4000);
+      }, 5000);
+    }
+
+    function addMoon() {
+      const moon = document.createElement('div');
+      moon.classList.add('moon');
+      document.body.appendChild(moon);
+    }
   </script>
 </body>
 </html>
