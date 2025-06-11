@@ -69,10 +69,15 @@
 
     .content {
       opacity: 0;
-      padding: 30px;
       transition: opacity 1s ease;
       z-index: 1;
       position: relative;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      padding: 40px;
     }
 
     .content.show {
@@ -80,16 +85,17 @@
     }
 
     h1 {
-      font-size: 2.5em;
+      font-size: 3em;
       color: #ffccff;
       text-shadow: 0 0 10px #ff99ff, 0 0 20px #ff3399;
-      margin-bottom: 20px;
+      margin-bottom: 30px;
     }
 
     .message {
-      font-size: 1.5em;
-      margin: 15px 0;
+      font-size: 2em;
+      margin: 20px 0;
       animation: glow 1.5s infinite alternate;
+      max-width: 90%;
     }
 
     @keyframes glow {
@@ -155,6 +161,7 @@
     <h1>FELIZ DIA DOS NAMORADOS, MEU AMOR 💘</h1>
     <div class="message">VOCÊ É A MULHER MAIS PERFEITA DESSE MUNDO</div>
     <div class="message">TE AMO MINHA ESTRELINHA 🌟</div>
+    <div class="message">VOCÊ É O RAIO DE SOL QUE ILUMINA TODOS OS MEUS DIAS ☀️</div>
   </div>
 
   <script>
