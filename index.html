@@ -6,7 +6,228 @@
   <title>Para minha estrela, July ✨</title>
   <link rel="icon" type="image/png" href="https://cdn-icons-png.flaticon.com/512/616/616490.png" />
   <style>
-    /* ... todo o CSS permanece igual ao anterior ... */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      background: linear-gradient(to bottom, #660000, #990000);
+      color: white;
+      font-family: 'Comic Sans MS', cursive, sans-serif;
+      height: 100vh;
+      overflow: hidden;
+      text-align: center;
+      position: relative;
+      transition: background 1s ease;
+    }
+
+    .envelope-container {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      cursor: pointer;
+      z-index: 10;
+      transition: opacity 0.5s ease, transform 0.5s ease;
+    }
+
+    .envelope {
+      width: 180px;
+      height: 100px;
+      background: #fff0f5;
+      border: 2px solid #cc3366;
+      border-radius: 10px;
+      position: relative;
+      box-shadow: 0 0 10px #ff99cc;
+    }
+
+    .flap {
+      width: 0;
+      height: 0;
+      border-left: 90px solid transparent;
+      border-right: 90px solid transparent;
+      border-bottom: 50px solid #ffccdd;
+      position: absolute;
+      top: -50px;
+      left: 0;
+      transition: transform 0.6s ease;
+      transform-origin: bottom center;
+    }
+
+    .opened .flap {
+      transform: rotateX(180deg);
+    }
+
+    .hide-envelope {
+      opacity: 0;
+      transform: scale(0);
+      pointer-events: none;
+    }
+
+    .content {
+      opacity: 0;
+      transition: opacity 1s ease;
+      z-index: 1;
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      padding: 20px;
+    }
+
+    .content.show {
+      opacity: 1;
+    }
+
+    h1 {
+      font-size: 2.2em;
+      color: #ffccff;
+      text-shadow: 0 0 10px #ff99ff, 0 0 20px #ff3399;
+      margin-bottom: 20px;
+    }
+
+    .message {
+      font-size: 1.5em;
+      margin: 15px 0;
+      animation: glow 1.5s infinite alternate;
+      max-width: 90%;
+    }
+
+    @keyframes glow {
+      from {
+        text-shadow: 0 0 10px #fff, 0 0 20px #ff3399;
+      }
+      to {
+        text-shadow: 0 0 20px #ffccff, 0 0 30px #ff99cc;
+      }
+    }
+
+    .heart {
+      position: absolute;
+      width: 20px;
+      height: 20px;
+      background-color: pink;
+      transform: rotate(45deg);
+      animation: float 8s linear infinite;
+      z-index: 0;
+    }
+
+    .heart::before,
+    .heart::after {
+      content: "";
+      position: absolute;
+      width: 20px;
+      height: 20px;
+      background-color: pink;
+      border-radius: 50%;
+    }
+
+    .heart::before {
+      top: -10px;
+      left: 0;
+    }
+
+    .heart::after {
+      left: -10px;
+      top: 0;
+    }
+
+    @keyframes float {
+      0% {
+        transform: translateY(100vh) rotate(45deg);
+        opacity: 1;
+      }
+      100% {
+        transform: translateY(-10vh) rotate(45deg);
+        opacity: 0;
+      }
+    }
+
+    .replay-btn, .love-btn {
+      margin-top: 30px;
+      padding: 15px 25px;
+      font-size: 1em;
+      border: none;
+      border-radius: 50px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+
+    .replay-btn {
+      background-color: #ff99cc;
+      color: white;
+      box-shadow: 0 0 10px #ff3399;
+    }
+
+    .replay-btn:hover {
+      background-color: #ff66aa;
+    }
+
+    .love-btn {
+      background-color: #800080;
+      color: white;
+      font-weight: bold;
+      border-radius: 50%;
+      padding: 20px;
+      font-size: 1.1em;
+      box-shadow: 0 0 15px #cc66ff;
+    }
+
+    .space-mode {
+      background: radial-gradient(ellipse at bottom, #1b2735 0%, #090a0f 100%);
+    }
+
+    .star, .comet {
+      position: absolute;
+      background: white;
+      animation: twinkle 3s infinite;
+      border-radius: 50%;
+      opacity: 0.8;
+    }
+
+    .star {
+      width: 2px;
+      height: 2px;
+    }
+
+    .comet {
+      width: 3px;
+      height: 3px;
+      background: #aaffff;
+      animation: cometFall 4s linear infinite;
+    }
+
+    .big-star {
+      width: 5px;
+      height: 5px;
+      background: #fff9c4;
+      animation: cometFall 6s linear infinite;
+    }
+
+    @keyframes twinkle {
+      0%, 100% { opacity: 0.3; }
+      50% { opacity: 1; }
+    }
+
+    @keyframes cometFall {
+      0% {
+        transform: translateY(-10vh) translateX(-50vw);
+        opacity: 1;
+      }
+      100% {
+        transform: translateY(100vh) translateX(50vw);
+        opacity: 0;
+      }
+    }
+
+    @media (max-width: 500px) {
+      h1 { font-size: 1.7em; }
+      .message { font-size: 1.2em; }
+    }
   </style>
 </head>
 <body>
@@ -33,7 +254,54 @@
   </iframe>
 
   <script>
-    // ... todo o JavaScript permanece igual ao anterior ...
+    const envelopeContainer = document.getElementById("envelopeContainer");
+    const flap = document.getElementById("flap");
+    const content = document.getElementById("content");
+    const loveBtn = document.getElementById("loveBtn");
+
+    envelopeContainer.addEventListener("click", () => {
+      envelopeContainer.classList.add("opened");
+      flap.style.transform = "rotateX(180deg)";
+      setTimeout(() => {
+        envelopeContainer.classList.add("hide-envelope");
+        content.classList.add("show");
+      }, 1000);
+    });
+
+    function createHeart() {
+      const heart = document.createElement("div");
+      heart.classList.add("heart");
+      heart.style.left = Math.random() * 100 + "vw";
+      heart.style.animationDuration = (5 + Math.random() * 5) + "s";
+      document.body.appendChild(heart);
+      setTimeout(() => heart.remove(), 10000);
+    }
+
+    setInterval(createHeart, 300);
+
+    function createStarOrComet() {
+      const el = document.createElement("div");
+      const r = Math.random();
+      if (r < 0.2) {
+        el.className = "comet";
+      } else if (r < 0.25) {
+        el.className = "big-star";
+      } else {
+        el.className = "star";
+      }
+      el.style.left = Math.random() * 100 + "vw";
+      el.style.top = Math.random() * 100 + "vh";
+      el.style.animationDuration = (3 + Math.random() * 5) + "s";
+      document.body.appendChild(el);
+      setTimeout(() => el.remove(), 8000);
+    }
+
+    loveBtn.addEventListener("click", () => {
+      document.body.classList.add("space-mode");
+      document.querySelectorAll(".message").forEach(m => m.remove());
+      document.querySelector("h1").innerText = "A mesma quantidade infinita de estrelas no céu ✨";
+      setInterval(createStarOrComet, 100);
+    });
   </script>
 
 </body>
