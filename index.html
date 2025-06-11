@@ -35,12 +35,20 @@
     }
 
     .card-button {
-      background: url('https://cdn-icons-png.flaticon.com/512/158/158756.png') no-repeat center center / cover;
       width: 120px;
       height: 90px;
       border: none;
       cursor: pointer;
       background-color: transparent;
+      background-image: url('https://cdn-icons-png.flaticon.com/512/3064/3064197.png');
+      background-repeat: no-repeat;
+      background-position: center;
+      background-size: contain;
+      filter: drop-shadow(0 0 2px #800080);
+      transition: transform 0.3s ease;
+    }
+    .card-button:hover {
+      transform: scale(1.1);
     }
 
     .message {
@@ -144,6 +152,33 @@
       }
     }
 
+    /* Cometa */
+    .comet {
+      position: absolute;
+      width: 50px;
+      height: 3px;
+      background: linear-gradient(90deg, white, rgba(255,255,255,0));
+      border-radius: 50%;
+      filter: drop-shadow(0 0 5px white);
+      animation: fall-comet linear infinite;
+      z-index: 1;
+    }
+
+    @keyframes fall-comet {
+      0% {
+        top: -20px;
+        left: 100vw;
+        opacity: 1;
+        transform: translateX(0) translateY(0) rotate(45deg);
+      }
+      100% {
+        top: 100vh;
+        left: -100px;
+        opacity: 0;
+        transform: translateX(-100px) translateY(100vh) rotate(45deg);
+      }
+    }
+
     .moon {
       position: absolute;
       top: 40px;
@@ -152,7 +187,10 @@
       height: 80px;
       background: #fefcd7;
       border-radius: 50%;
-      box-shadow: 0 0 20px 5px #fff8b5;
+      box-shadow:
+        0 0 10px 5px #fff8b5,
+        0 0 20px 10px #fff8b5,
+        0 0 30px 20px #fff8b5;
       z-index: 1;
     }
 
@@ -177,8 +215,8 @@
 </head>
 <body>
   <div class="container" id="mainContainer">
-    <button class="card-button" id="cardBtn"></button>
-    <div class="message" id="message">
+    <button class="card-button" id="cardBtn" aria-label="Abrir carta"></button>
+    <div class="message" id="message" aria-live="polite">
       <div>FELIZ DIAS NAMORADOS MEU AMOR ❤</div>
       <div>Você é a luz que ilumina meus dias ☀</div>
       <div>Eu te amo muito minha estrelinha</div>
@@ -205,6 +243,7 @@
 
     let heartsInterval;
     let starsInterval;
+    let cometsInterval;
 
     // Criação de corações
     function createHeart() {
@@ -226,14 +265,31 @@
       setTimeout(() => star.remove(), 6000);
     }
 
-    // Iniciar corações
+    // Criação de cometas
+    function createComet() {
+      const comet = document.createElement('div');
+      comet.classList.add('comet');
+      comet.style.top = '-20px';
+      comet.style.left = window.innerWidth + 'px';
+      comet.style.animationDuration = (Math.random() * 3 + 3) + 's';
+      body.appendChild(comet);
+      setTimeout(() => comet.remove(), 6000);
+    }
+
+    // Iniciar corações por 2 segundos
     function startHearts() {
       heartsInterval = setInterval(createHeart, 150);
+      setTimeout(() => clearInterval(heartsInterval), 2000);
     }
 
     // Iniciar estrelas
     function startStars() {
-      starsInterval = setInterval(createStar, 60); // Mais estrelas
+      starsInterval = setInterval(createStar, 60);
+    }
+
+    // Iniciar cometas
+    function startComets() {
+      cometsInterval = setInterval(createComet, 1000);
     }
 
     cardBtn.addEventListener('click', () => {
@@ -242,15 +298,16 @@
     });
 
     loveBtn.addEventListener('click', () => {
-      clearInterval(heartsInterval); // Parar corações
+      clearInterval(heartsInterval); // parar corações caso ainda estejam
       body.classList.add('space-theme');
       moon.style.display = 'block';
       document.getElementById('mainContainer').style.display = 'none';
       spaceText.style.display = 'block';
       startStars();
+      startComets();
     });
 
-    // Começa com corações caindo
+    // Começa com corações caindo por 2 segundos
     startHearts();
   </script>
 </body>
