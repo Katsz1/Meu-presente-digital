@@ -247,10 +247,10 @@
     <button class="replay-btn" onclick="location.reload()">Ver de novo 💌</button>
   </div>
 
-  <!-- MÚSICA DE FUNDO (INVISÍVEL) -->
-  <iframe style="display: none;" 
-    src="https://www.youtube.com/embed/AkC-b0aFw1I?autoplay=1&loop=1&playlist=AkC-b0aFw1I" 
-    allow="autoplay">
+  <!-- MÚSICA DE FUNDO (YouTube embed invisível) -->
+  <iframe id="ytplayer" style="display:none;" width="0" height="0"
+    src="https://www.youtube.com/embed/AkC-b0aFw1I?enablejsapi=1&version=3" 
+    frameborder="0" allow="autoplay">
   </iframe>
 
   <script>
@@ -259,15 +259,7 @@
     const content = document.getElementById("content");
     const loveBtn = document.getElementById("loveBtn");
 
-    envelopeContainer.addEventListener("click", () => {
-      envelopeContainer.classList.add("opened");
-      flap.style.transform = "rotateX(180deg)";
-      setTimeout(() => {
-        envelopeContainer.classList.add("hide-envelope");
-        content.classList.add("show");
-      }, 1000);
-    });
-
+    // Corações flutuando
     function createHeart() {
       const heart = document.createElement("div");
       heart.classList.add("heart");
@@ -276,9 +268,9 @@
       document.body.appendChild(heart);
       setTimeout(() => heart.remove(), 10000);
     }
-
     setInterval(createHeart, 300);
 
+    // Estrelas e cometas
     function createStarOrComet() {
       const el = document.createElement("div");
       const r = Math.random();
@@ -296,13 +288,41 @@
       setTimeout(() => el.remove(), 8000);
     }
 
+    // Música via YouTube
+    let player;
+    function onYouTubeIframeAPIReady() {
+      player = new YT.Player('ytplayer');
+    }
+    function playMusic() {
+      if (player && player.playVideo) {
+        player.playVideo();
+      }
+    }
+
+    // Envelope clicado
+    envelopeContainer.addEventListener("click", () => {
+      envelopeContainer.classList.add("opened");
+      flap.style.transform = "rotateX(180deg)";
+      setTimeout(() => {
+        envelopeContainer.classList.add("hide-envelope");
+        content.classList.add("show");
+        playMusic();
+      }, 1000);
+    });
+
+    // Botão "quanto te amo"
     loveBtn.addEventListener("click", () => {
       document.body.classList.add("space-mode");
       document.querySelectorAll(".message").forEach(m => m.remove());
       document.querySelector("h1").innerText = "A mesma quantidade infinita de estrelas no céu ✨";
       setInterval(createStarOrComet, 100);
     });
-  </script>
 
+    // Carrega a API do YouTube
+    const tag = document.createElement('script');
+    tag.src = "https://www.youtube.com/iframe_api";
+    const firstScriptTag = document.getElementsByTagName('script')[0];
+    firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
+  </script>
 </body>
 </html>
