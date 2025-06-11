@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <title>Para minha estrela, July ✨</title>
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      background: linear-gradient(to bottom, #660000, #990000);
+      color: white;
+      font-family: 'Comic Sans MS', cursive, sans-serif;
+      text-align: center;
+      height: 100vh;
+      overflow: hidden;
+      position: relative;
+    }
+
+    .envelope {
+      width: 200px;
+      height: 120px;
+      background: #fff0f5;
+      border: 2px solid #cc3366;
+      border-radius: 10px;
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      cursor: pointer;
+      transition: transform 0.5s ease;
+      box-shadow: 0 0 10px #ff99cc;
+    }
+
+    .flap {
+      width: 200px;
+      height: 0;
+      border-left: 100px solid transparent;
+      border-right: 100px solid transparent;
+      border-bottom: 60px solid #ffccdd;
+      position: absolute;
+      top: -60px;
+      left: 0;
+      transform-origin: bottom;
+      transition: transform 0.6s ease;
+    }
+
+    .opened .flap {
+      transform: rotateX(180deg);
+    }
+
+    .opened .envelope {
+      transform: scale(0);
+    }
+
+    .content {
+      opacity: 0;
+      padding: 30px;
+      transition: opacity 1s ease;
+    }
+
+    .show .content {
+      opacity: 1;
+    }
+
+    h1 {
+      font-size: 2.5em;
+      color: #ffccff;
+      text-shadow: 0 0 10px #ff99ff, 0 0 20px #ff3399;
+      margin-bottom: 20px;
+    }
+
+    .message {
+      font-size: 1.5em;
+      margin: 15px 0;
+      animation: glow 1.5s infinite alternate;
+    }
+
+    @keyframes glow {
+      from {
+        text-shadow: 0 0 10px #fff, 0 0 20px #ff3399, 0 0 30px #ff0066;
+      }
+      to {
+        text-shadow: 0 0 20px #ffccff, 0 0 30px #ff99cc, 0 0 40px #ff3399;
+      }
+    }
+
+    .heart {
+      position: absolute;
+      width: 20px;
+      height: 20px;
+      background-color: pink;
+      transform: rotate(45deg);
+      animation: float 10s linear infinite;
+    }
+
+    .heart::before,
+    .heart::after {
+      content: "";
+      position: absolute;
+      width: 20px;
+      height: 20px;
+      background-color: pink;
+      border-radius: 50%;
+    }
+
+    .heart::before {
+      top: -10px;
+      left: 0;
+    }
+
+    .heart::after {
+      left: -10px;
+      top: 0;
+    }
+
+    @keyframes float {
+      0% {
+        transform: translateY(100vh) rotate(45deg);
+        opacity: 1;
+      }
+      100% {
+        transform: translateY(-10vh) rotate(45deg);
+        opacity: 0;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Carta animada -->
+  <div class="envelope" id="envelope">
+    <div class="flap"></div>
+  </div>
+
+  <!-- Conteúdo aparece após abrir -->
+  <div class="content" id="content">
+    <h1>FELIZ DIA DOS NAMORADOS, MEU AMOR 💘</h1>
+    <div class="message">VOCÊ É A MULHER MAIS PERFEITA DESSE MUNDO</div>
+    <div class="message">TE AMO MINHA ESTRELINHA 🌟</div>
+  </div>
+
+  <script>
+    const envelope = document.getElementById("envelope");
+    const content = document.getElementById("content");
+
+    envelope.addEventListener("click", () => {
+      envelope.classList.add("opened");
+      setTimeout(() => {
+        content.classList.add("show");
+      }, 1000);
+    });
+
+    function createHeart() {
+      const heart = document.createElement("div");
+      heart.classList.add("heart");
+      heart.style.left = Math.random() * 100 + "vw";
+      heart.style.animationDuration = (5 + Math.random() * 5) + "s";
+      document.body.appendChild(heart);
+      setTimeout(() => {
+        heart.remove();
+      }, 10000);
+    }
+
+    setInterval(createHeart, 300);
+  </script>
+</body>
+</html>
