@@ -1,8 +1,10 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-  <meta charset="UTF-8">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Para minha estrela, July ✨</title>
+  <link rel="icon" type="image/png" href="https://cdn-icons-png.flaticon.com/512/616/616490.png" />
   <style>
     * {
       margin: 0;
@@ -18,6 +20,7 @@
       overflow: hidden;
       text-align: center;
       position: relative;
+      transition: background 1s ease;
     }
 
     .envelope-container {
@@ -31,8 +34,8 @@
     }
 
     .envelope {
-      width: 200px;
-      height: 120px;
+      width: 180px;
+      height: 100px;
       background: #fff0f5;
       border: 2px solid #cc3366;
       border-radius: 10px;
@@ -43,11 +46,11 @@
     .flap {
       width: 0;
       height: 0;
-      border-left: 100px solid transparent;
-      border-right: 100px solid transparent;
-      border-bottom: 60px solid #ffccdd;
+      border-left: 90px solid transparent;
+      border-right: 90px solid transparent;
+      border-bottom: 50px solid #ffccdd;
       position: absolute;
-      top: -60px;
+      top: -50px;
       left: 0;
       transition: transform 0.6s ease;
       transform-origin: bottom center;
@@ -73,7 +76,7 @@
       justify-content: center;
       align-items: center;
       height: 100vh;
-      padding: 40px;
+      padding: 20px;
     }
 
     .content.show {
@@ -81,15 +84,15 @@
     }
 
     h1 {
-      font-size: 3em;
+      font-size: 2.2em;
       color: #ffccff;
       text-shadow: 0 0 10px #ff99ff, 0 0 20px #ff3399;
-      margin-bottom: 30px;
+      margin-bottom: 20px;
     }
 
     .message {
-      font-size: 2em;
-      margin: 20px 0;
+      font-size: 1.5em;
+      margin: 15px 0;
       animation: glow 1.5s infinite alternate;
       max-width: 90%;
     }
@@ -109,7 +112,8 @@
       height: 20px;
       background-color: pink;
       transform: rotate(45deg);
-      animation: float 10s linear infinite;
+      animation: float 8s linear infinite;
+      z-index: 0;
     }
 
     .heart::before,
@@ -142,55 +146,139 @@
         opacity: 0;
       }
     }
+
+    .replay-btn, .love-btn {
+      margin-top: 30px;
+      padding: 15px 25px;
+      font-size: 1em;
+      border: none;
+      border-radius: 50px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+
+    .replay-btn {
+      background-color: #ff99cc;
+      color: white;
+      box-shadow: 0 0 10px #ff3399;
+    }
+
+    .replay-btn:hover {
+      background-color: #ff66aa;
+    }
+
+    .love-btn {
+      background-color: #800080;
+      color: white;
+      font-weight: bold;
+      border-radius: 50%;
+      padding: 20px;
+      font-size: 1.1em;
+      box-shadow: 0 0 15px #cc66ff;
+    }
+
+    .space-mode {
+      background: radial-gradient(ellipse at bottom, #1b2735 0%, #090a0f 100%);
+    }
+
+    .star, .comet {
+      position: absolute;
+      width: 2px;
+      height: 2px;
+      background: white;
+      animation: twinkle 3s infinite;
+      border-radius: 50%;
+      opacity: 0.8;
+    }
+
+    .comet {
+      width: 3px;
+      height: 3px;
+      background: #aaffff;
+      animation: cometFall 4s linear infinite;
+    }
+
+    @keyframes twinkle {
+      0%, 100% { opacity: 0.3; }
+      50% { opacity: 1; }
+    }
+
+    @keyframes cometFall {
+      0% {
+        transform: translateY(-10vh) translateX(-50vw);
+        opacity: 1;
+      }
+      100% {
+        transform: translateY(100vh) translateX(50vw);
+        opacity: 0;
+      }
+    }
+
+    @media (max-width: 500px) {
+      h1 { font-size: 1.7em; }
+      .message { font-size: 1.2em; }
+    }
   </style>
 </head>
 <body>
 
-  <!-- Envelope -->
   <div class="envelope-container" id="envelopeContainer">
     <div class="envelope" id="envelope"></div>
     <div class="flap" id="flap"></div>
   </div>
 
-  <!-- Mensagem aparece depois -->
   <div class="content" id="content">
     <h1>FELIZ DIA DOS NAMORADOS, MEU AMOR 💘</h1>
     <div class="message">VOCÊ É A MULHER MAIS PERFEITA DESSE MUNDO</div>
     <div class="message">TE AMO MINHA ESTRELINHA 🌟</div>
     <div class="message">VOCÊ É O RAIO DE SOL QUE ILUMINA TODOS OS MEUS DIAS ☀️</div>
+
+    <button class="love-btn" id="loveBtn">Você quer ver o quanto te amo?</button>
+    <button class="replay-btn" onclick="location.reload()">Ver de novo 💌</button>
   </div>
 
   <script>
     const envelopeContainer = document.getElementById("envelopeContainer");
     const flap = document.getElementById("flap");
     const content = document.getElementById("content");
+    const loveBtn = document.getElementById("loveBtn");
 
     envelopeContainer.addEventListener("click", () => {
       envelopeContainer.classList.add("opened");
-
-      // Abre a aba da carta
       flap.style.transform = "rotateX(180deg)";
-
-      // Após animação, esconde a carta e mostra o conteúdo
       setTimeout(() => {
         envelopeContainer.classList.add("hide-envelope");
         content.classList.add("show");
       }, 1000);
     });
 
-    // corações
     function createHeart() {
       const heart = document.createElement("div");
       heart.classList.add("heart");
       heart.style.left = Math.random() * 100 + "vw";
       heart.style.animationDuration = (5 + Math.random() * 5) + "s";
       document.body.appendChild(heart);
-      setTimeout(() => {
-        heart.remove();
-      }, 10000);
+      setTimeout(() => heart.remove(), 10000);
     }
 
     setInterval(createHeart, 300);
+
+    function createStarOrComet() {
+      const el = document.createElement("div");
+      el.className = Math.random() < 0.3 ? "comet" : "star";
+      el.style.left = Math.random() * 100 + "vw";
+      el.style.top = Math.random() * 100 + "vh";
+      el.style.animationDuration = (3 + Math.random() * 5) + "s";
+      document.body.appendChild(el);
+      setTimeout(() => el.remove(), 8000);
+    }
+
+    loveBtn.addEventListener("click", () => {
+      document.body.classList.add("space-mode");
+      document.querySelectorAll(".message").forEach(m => m.remove());
+      document.querySelector("h1").innerText = "A mesma quantidade infinita de estrelas no céu ✨";
+      setInterval(createStarOrComet, 200);
+    });
   </script>
 
 </body>
