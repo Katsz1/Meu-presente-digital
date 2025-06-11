@@ -171,14 +171,9 @@
     A mesma quantidade infinita de estrelas no céu ✨
   </div>
 
-  <audio id="bgMusic" style="display:none" loop>
-    <source src="https://docs.google.com/uc?export=download&id=1DIXqs8ziT6IqmUwMrfTiC1NkT1OpwzXW" type="audio/mpeg">
-  </audio>
-
   <script>
     const envelope = document.getElementById("envelope");
     const message = document.getElementById("message");
-    const music = document.getElementById("bgMusic");
     const buttons = document.getElementById("buttons");
     const loveBtn = document.getElementById("loveBtn");
     const response = document.getElementById("response");
@@ -189,7 +184,6 @@
         envelope.style.display = "none";
         message.classList.add("show");
         buttons.classList.add("show");
-        music.play();
       }, 500);
     });
 
